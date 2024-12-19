@@ -75,6 +75,7 @@ def update_activity(activity_id, gear_id, commute=False, mute=False):
         
         # get the bikes total mileage from the response. can add other fun things here later
         activity_data = response.json()
+        
         if "gear" in activity_data:
             gear_name = activity_data["gear"]["nickname"] or activity_data["gear"]["name"]
             total_mileage = activity_data["gear"]["converted_distance"]
@@ -82,6 +83,13 @@ def update_activity(activity_id, gear_id, commute=False, mute=False):
             print(f"Total mileage on {gear_name}: {total_mileage} miles ({total_mileage*1.609} km)")
         else:
             print("Gear information not included")
+
+        with open("debug.txt", "a") as debug_file:
+            debug_file.write(f"Activity ID: {activity_id}\n")
+            debug_file.write(f"Update Data Sent: {update_data}\n")
+            debug_file.write(f"Response Status: {response.status_code}\n")
+            debug_file.write(f"Response Text: {response.text}\n")
+            debug_file.write("=" * 50 + "\n")
     else:
         print(f"Error updating activity: {response.status_code}")
         print(f"Response: {response.text}")
