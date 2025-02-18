@@ -31,7 +31,7 @@ def refresh_access_token():
 
 def get_most_recent_activity():
     """
-    fetche the most recent activity using the refreshed access token.
+    fetches the most recent activity using the refreshed access token.
     """
     if not ACCESS_TOKEN:
         refresh_access_token()
@@ -66,6 +66,9 @@ def update_activity(activity_id, gear_id, commute=False, mute=False):
         update_data["commute"] = True
     if mute:
         update_data["hide_from_home"] = True
+
+    # can remove data points in the main function as necessary
+    # can also add data points here
 
     # update request for the activity
     response = requests.put(url, headers=headers, json=update_data)
